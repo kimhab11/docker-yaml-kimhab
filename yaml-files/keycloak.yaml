@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     volumes:
       - keycloak_data:/var/lib/postgresql/data
-    container_name: keycloak-database-microservice
+    container_name: keycloak-database-microservice-kimhab
     healthcheck:
       test: [ "CMD","pg_isready","-U","keycloak" ]
       interval: 10s
@@ -36,19 +36,19 @@ services:
     environment:
       <<: *database-env
     ports:
-      - "5530:5432"
+      - "5032:5432"
 
   keycloak-service:
     image: jboss/keycloak:16.1.1
     restart: unless-stopped
-    container_name: keycloak-server-microservice
+    container_name: keycloak-server-microservice-kimhab
     #    volumes:
     #      - ./keycloak/realm.json:/opt/realm.json
     environment:
       <<: *keycloak-env
     ports:
-      - "8900:8080"
-      - "8443:8443"
+      - "5000:8080"
+      - "5443:8443"
     depends_on:
       - keycloak-database
     healthcheck:
