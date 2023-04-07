@@ -1,0 +1,16 @@
+version: '3'
+services:
+  
+  nacos:
+    container_name: 'nacos_v2.0.3_standalone'
+    image: nacos/nacos-server:${NACOS_VERSION}
+    volumes:
+      - ./standalone-logs/:/home/nacos/logs
+    ports:
+      - "8849:8848"
+    environment:
+      - PREFER_HOST_MODE=hostname 
+      - MODE=standalone 
+
+# user = nacos
+# pass = nacos
