@@ -7,3 +7,4 @@
 /dataSources/
 /dataSources.local.xml
 ./yaml-files/.env
+./yaml-files/volumes
