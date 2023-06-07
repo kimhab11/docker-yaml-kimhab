@@ -9,3 +9,5 @@
 ./yaml-files/.env
 ./yaml-files/cache
 ./yaml-files/volumes
+yaml-files/volumes
+yaml-files/.env
