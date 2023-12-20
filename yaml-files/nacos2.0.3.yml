@@ -3,7 +3,8 @@ services:
   
   nacos:
     container_name: 'nacos_v2.0.3_standalone'
-    image: nacos/nacos-server:${NACOS_VERSION}
+    hostname: nacos
+    image: nacos/nacos-server:${NACOS_VERSION} #nacos/nacos-server:v2.2.2-slim
     volumes:
       - ./standalone-logs/:/home/nacos/logs
     ports:
