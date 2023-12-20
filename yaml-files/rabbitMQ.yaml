@@ -8,11 +8,14 @@ services:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
     ports:
-        - "5672:5672"
-        - "15672:15672"
+      - "5672:5672"
+      - "15672:15672"
     volumes:
-        - rabbitmq/data:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - rabbitmq/log:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - rabbitmq/data:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - rabbitmq/log:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
