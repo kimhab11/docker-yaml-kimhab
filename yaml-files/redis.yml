@@ -1,27 +1,48 @@
-version: '3.8'
+version: '3'
 services:
+  #1
   redis-commander:
-    container_name: redis-ui
+    container_name: redis-commander
     image: rediscommander/redis-commander:${FINAL}
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
       - REDIS_HOSTS=redis
       # - REDIS_HOSTS=local:redis:6379
     depends_on:
       - cache-redis
+##      - redisinsight
 
+  #2
+  redisinsight:
+    container_name: redisinsight
+    image: 'redislabs/redisinsight:latest'
+    #image: redis/redis-stack
+    depends_on:
+      - cache-redis
+    ports:
+      - '8001:8001'
+   #   - '127.0.0.1:8001:8001'
+ #     - "6379:6379"
+
+  #3
   cache-redis:
     container_name: cache-redis
     hostname: redis
-    image: redis
-#    image: redis:6.2-alpine
-    restart: always
-    ports:
-      - '6379:6379'
+    image: 'redis' # 'redis:6.0.6' , redis , redis:6.2-alpine
+  #  restart: always
+#    healthcheck:
+#      test: redis-cli ping
+#      interval: 3s
+#      timeout: 5s
+#      retries: 5
+#    ports:
+#      - '6379:6379'
+      # -  '127.0.0.1:6379:6379/tcp'
 #    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    volumes:
-      - ./volumes/cache-redis:/data
+#    volumes:
+#      - ./volumes/cache-redis:/data
+      #- :/data
 volumes:
   cache:
     driver: local
