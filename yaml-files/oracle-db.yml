@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  oracle-db:
+    container_name: oracle-db-container
+    image: container-registry.oracle.com/database/enterprise:${ORACLE_DB_VERSION}
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
+      - ORACLE_PWD=password123
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ENABLE_ARCHIVELOG=true
+    volumes:
+      - ./volumes/oracle-db:/opt/oracle/oradata
+
+# 1. sign in https://container-registry.oracle.com/ -> select databse -> do with document
+# 2. start pull image or run docker
