@@ -12,3 +12,4 @@
 yaml-files/volumes
 yaml-files/.env
 ./yaml-files/.env
+.idea

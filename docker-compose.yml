@@ -1,11 +1,17 @@
-version: '3.3'
+
+version: "3.4"
+
 services:
-  redis:
-    container_name: redis
-    image: redis:6.0.7
+  minio:
+    container_name: minio-server
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001" # docker.io/bitnami/minio:2022
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_DEFAULT_BUCKETS=kimhab-test
+    volumes:
+      - ./volumes/minio_data:/data
     ports:
-      - "6379:6379"
-  redisinsight:
-    image: redislabs/redisinsight:latest
-    ports:
-      - '8001:8001'
+      - 9000:9000
+      - 9002:9001
