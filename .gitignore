@@ -15,3 +15,5 @@ yaml-files/.env
 ./.idea/**
 ./.idea/
 ./volumes/
+
+.idea/
