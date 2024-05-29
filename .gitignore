@@ -13,5 +13,5 @@ yaml-files/volumes
 yaml-files/.env
 ./yaml-files/.env
 ./.idea/**
-./.idea/
-./volumes/
+./.idea/**
+./volumes

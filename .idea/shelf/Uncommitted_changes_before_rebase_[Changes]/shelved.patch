@@ -1,0 +1,18 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Default ignored files\r\n/shelf/\r\n/.idea/workspace.xml\r\n# Editor-based HTTP Client requests\r\n/httpRequests/\r\n# Datasource local storage ignored files\r\n/dataSources/\r\n/dataSources.local.xml\r\n./yaml-files/.env\r\n./yaml-files/cache\r\n./yaml-files/volumes\r\nyaml-files/volumes\r\nyaml-files/.env\r\n./yaml-files/.env\r\n./.idea/**\r\n./.idea/\r\n./volumes/\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 9ea3512b22d305c2217e01cd320f545ec6c232b7)
++++ b/.gitignore	(date 1716966928305)
+@@ -13,5 +13,5 @@
+ yaml-files/.env
+ ./yaml-files/.env
+ ./.idea/**
+-./.idea/
+-./volumes/
++./.idea/**
++./volumes
