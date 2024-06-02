@@ -11,38 +11,40 @@ services:
       # - REDIS_HOSTS=local:redis:6379
     depends_on:
       - cache-redis
-##      - redisinsight
 
   #2
   redisinsight:
     container_name: redisinsight
-    image: 'redislabs/redisinsight:latest'
-    #image: redis/redis-stack
-    depends_on:
-      - cache-redis
+   # image: 'redislabs/redisinsight:latest'
+    image: 'oblakstudio/redisinsight:latest'
+#    depends_on:
+#      - cache-redis
     ports:
-      - '8001:8001'
-   #   - '127.0.0.1:8001:8001'
- #     - "6379:6379"
+     - '8001:5540'
+    # - '127.0.0.1:8001:8001'
+    volumes:
+      - ./volumes/redisinsight:/db
+      - ./volumes/redisinsight:/data
 
   #3
   cache-redis:
     container_name: cache-redis
     hostname: redis
-    image: 'redis' # 'redis:6.0.6' , redis , redis:6.2-alpine
-  #  restart: always
+    image: 'redis:latest' # 'redis:6.0.6' , redis:latest , redis:6.2-alpine
+    restart: on-failure
+    environment:
+      - REDIS_PASSWORD=yourpassword
 #    healthcheck:
 #      test: redis-cli ping
 #      interval: 3s
 #      timeout: 5s
 #      retries: 5
-#    ports:
-#      - '6379:6379'
-      # -  '127.0.0.1:6379:6379/tcp'
-#    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-#    volumes:
-#      - ./volumes/cache-redis:/data
-      #- :/data
+    ports:
+      - '6379:6379'
+   #   - '127.0.0.1:6379:6379/tcp'
+    command: redis-server --save 20 1 --loglevel warning --requirepass yourpassword # <default> as Username
+    volumes:
+      - ./volumes/cache-redis:/data
 volumes:
-  cache:
+  cache-redis:
     driver: local
