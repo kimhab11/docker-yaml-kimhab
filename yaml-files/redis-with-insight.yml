@@ -3,10 +3,10 @@ services:
   redisinsight-and-redis:
     container_name: redisinsight-and-redis
     hostname: redis
-    image: redis/redis-stack:latest
+    image: redis/redis-stack:${redisinsight_ver}
     volumes:
-      - ./redis/redis-stack.conf:/redis-stack.conf
-      - ./redis/data:/data
+      - ./volumes/redis/redis-stack.conf:/redis-stack.conf
+      - ./volumes/redis/data:/data
     ports:
-      - "8001:8001"
-      - "6379:6379"
+      - "8001:8001" #port ui
+      - "6379:6379" #port redis
