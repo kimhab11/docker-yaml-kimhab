@@ -2,12 +2,16 @@ version: '3.8'
 services:
   jenkins:
     container_name: jenkins
-    image: jenkins/jenkins:lts-alpine
+    image: ${JENKIN_V}
+    privileged: true
+#    user: asuas
     ports:
       - "8083:8080"
+      - "50000:50000"
     restart: on-failure
     volumes:
       - ./volumes/jenkins_home:/var/jenkins_home
+      - ./volumes/jenkins_home/run:/var/run/docker.sock
 
 #  app:
 #    build: ./path_to_your_spring_boot_app

@@ -1,0 +1,68 @@
+version: '3'
+services:
+  # API ENTERPRISE INTERGRATION
+  wso2ei:
+    image: wso2/wso2ei-integrator:latest
+    container_name: wso2-ENTERPRISE-INTEGRATION
+    ports:
+      - "9445:9443"
+      - "8244:8243"
+      - "8281:8280"
+    volumes:
+      - ./volumes/wso2ei_repository:/home/wso2carbon/wso2ei-6.6.0/repository/deployment/server
+      - ./volumes/wso2ei_logs:/home/wso2carbon/wso2ei-6.6.0/repository/logs
+    environment:
+      - USER=wso2carbon
+      - GROUP=wso2
+
+  # IDENTITY SERVER
+  wso2is:
+    image: wso2/wso2is:latest
+    container_name: wos2-IDENTITY-SERVER
+    ports:
+      - "9444:9443"
+    environment:
+      - WSO2_IS_SERVER_HOSTNAME=wso2is
+      - WSO2_IS_PUBLIC_HOSTNAME=localhost      - WSO2_IS_PUBLIC_PORT=9444
+      - WSO2_IS_PUBLIC_PROTOCOL=https      - WSO2_IS_PUBLIC_PORT_OFFSET=0
+      - WSO2_IS_INTERNAL_PORT_OFFSET=1      - WSO2_IS_ANALYTICS_ENABLED=false
+      - WSO2_IS_ANALYTICS_API_URL=https://localhost:9444/api/am/analytics/v1      - WSO2_IS_ANALYTICS_API_USERNAME=admin
+      - WSO2_IS_ANALYTICS_API_PASSWORD=admin
+    volumes:
+      - ./volumes/wso2is/repository/deployment/server:/home/wso2carbon/wso2is/repository/deployment/server
+    depends_on:
+      - mysql-db-ws02
+
+  # API MANAGER
+  api-manager:
+    image: wso2/wso2am:latest
+    container_name:wso2-API-MANAGER
+    ports:
+      - "8280:8280"
+      - "8243:8243"
+      - "9443:9443"
+      - "11111:11111"
+      - "5672:5672"
+      - "9999:9999"
+    depends_on:
+      - mysql-db-ws02
+    environment:
+      - WSO2_USER=wso2user
+      - WSO2_PASSWORD=wso2pass
+      - WSO2_DATABASE_HOST=mysql-db
+      - WSO2_DATABASE_PORT=3306
+      - WSO2_DATABASE_NAME=wso2amdb
+      - WSO2_DATABASE_USER=wso2amdbuser
+      - WSO2_DATABASE_PASSWORD=wso2amdbpass
+
+  #DATABASE MYSQL
+  mysql-db-ws02:
+    image: mysql:5.7
+    container_name: mysql-db
+    environment:
+     MYSQL_ROOT_PASSWORD: rootpass
+     MYSQL_USER: wso2amdbuser
+     MYSQL_PASSWORD: wso2amdbpass
+     MYSQL_DATABASE: wso2amdb
+    volumes:
+      - ./volumes/mysql-ws02/db-data:/var/lib/mysql

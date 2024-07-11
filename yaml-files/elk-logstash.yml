@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  elasticsearch:
+    container_name: elasticsearch-7.15.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    environment:
+      - discovery.type=single-node
+  logstash:
+    container_name: logstash-7.15.1
+    image: docker.elastic.co/logstash/logstash:7.15.1
+    volumes:
+      - ./volumes/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5000:5000"
+  kibana:
+    container_name: kibana-7.15.1
+    image: docker.elastic.co/kibana/kibana:7.15.1
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+networks:
+  default:
+    name: ms2-nacos

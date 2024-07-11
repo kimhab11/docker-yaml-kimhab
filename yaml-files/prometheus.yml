@@ -4,7 +4,8 @@ services:
     container_name: prometheus
     image: prom/prometheus:latest
     volumes:
-      - ./volumes/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
+#      - ./volumes/prometheus-standalone:/etc/prometheus/prometheus.yml
+      - ./volumes/prometheus_data:/prometheus
     ports:
       - "9090:9090"
     restart: on-failure

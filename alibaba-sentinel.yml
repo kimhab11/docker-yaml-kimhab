@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  sentinel-dashboard:
+    container_name: sentinel-dashboard
+    hostname: "sentinel"
+    image: bladex/sentinel-dashboard:latest
+    environment:
+      - sentinel.dashboard.auth.username=kimhab
+      - sentinel.dashboard.auth.password=kimhab
+      - project.name=sentinel-dashboard
+      - LANG=en_US.UTF-8
+      - TZ=Asia/Bangkok
+    ports:
+      - "8080:8080"
+      - "8719:8719"
+      - "8858:8858"
+    volumes:
+      - ./volumes/sentinel/root/logs:/root/logs
+
+
+  sentinel-db-dreamkaylee:
+    container_name: dreamkaylee-sentinel-dashboard
+    image: dreamkaylee/sentinel-dashboard
+    environment:
+      - sentinel.dashboard.auth.username=kimhab
+      - sentinel.dashboard.auth.password=kimhab
+      - LANG=en_US.UTF-8
+      - TZ=Asia/Bangkok
+    ports:
+      - "8080:8080"
+      - "8719:8719"
+      - "8858:8858"
