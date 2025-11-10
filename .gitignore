@@ -16,3 +16,4 @@ yaml-files/.env
 
 volumes/
 .idea/
+.vscode/

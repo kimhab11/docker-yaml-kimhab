@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  ibm-mq:
+    image: ibmcom/mq:latest
+    container_name: ibm-mq
+    ports:
+      - "1415:1414"  # MQ listener port
+      - "9444:9443"  # Web console port
+    volumes:
+      - qm1data:/mnt/mqm
+    environment: 
+      - LICENSE=accept
+      - MQ_QMGR_NAME=MQ1
+      - MQ_APP_PASSWORD=passw0rd
+    restart: unless-stopped
+volumes:
+  qm1data:
+
+# dspmqver , dspmq
