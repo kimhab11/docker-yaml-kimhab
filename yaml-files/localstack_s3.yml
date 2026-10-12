@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  localstack:
+    container_name: localstack_s3
+    image: localstack/localstack:3.7.0
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+    environment:
+      - SERVICES=s3                      # Only spin up the S3 service
+      - DEFAULT_REGION=us-east-1         # Set a default region
+    volumes:
+      - "./localstack_data:/var/lib/localstack" # Optional: Persist data
+
+
+      # pip install awscli-local 
+      # export AWS_ACCESS_KEY_ID=test
+
+      # export AWS_SECRET_ACCESS_KEY=test
+
+      # Create a bucket
+# awslocal s3 mb s3://my-test-bucket
+
+# List buckets to verify
+#awslocal s3 ls
