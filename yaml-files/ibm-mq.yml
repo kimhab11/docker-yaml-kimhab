@@ -1,19 +1,32 @@
 version: "3.8"
 services:
   ibm-mq:
-    image: ibmcom/mq:latest
+   # image: ibmcom/mq:latest
+    image: icr.io/ibm-messaging/mq:9.3.0.25-r1
     container_name: ibm-mq
     ports:
       - "1415:1414"  # MQ listener port
       - "9444:9443"  # Web console port
+     # - "9157:9157"
     volumes:
-      - qm1data:/mnt/mqm
+      - ./volumes/ibm-mq/data:/mnt/mqm # MQSC scripts volume to auto-create queues
+      - ./volumes/ibm-mq/mqsc:/etc/mqm/mqsc  # Persistence for MQ data
     environment: 
-      - LICENSE=accept
-      - MQ_QMGR_NAME=MQ1
-      - MQ_APP_PASSWORD=passw0rd
+      - LICENSE=accept # required to run IBM MQ container.
+      - MQ_QMGR_NAME=QMGR2 # queue manager name 
+      - MQ_ADMIN_PASSWORD=admin # Password for the MQ admin user
+      - MQ_APP_PASSWORD=pass  # password for application user
+      - MQ_LOG_LEVEL=INFO  # Optional: logging verbosity
+    #  - MQ_ENABLE_METRICS=true  # Optional: monitoring metrics
     restart: unless-stopped
-volumes:
-  qm1data:
+    healthcheck: 
+      test: ["CMD", "runmqsc", "QMGR2", "DISPLAY MQSTATUS"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+# volumes:
+#   qm1data:
 
 # dspmqver , dspmq
+
+# Out-of-the-box: usernames are fixed (admin, app).
