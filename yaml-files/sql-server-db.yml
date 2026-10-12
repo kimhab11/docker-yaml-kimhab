@@ -10,3 +10,4 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "sql_server_container"
     restart: unless-stopped
+    
