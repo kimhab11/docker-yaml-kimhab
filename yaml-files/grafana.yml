@@ -6,6 +6,12 @@ services:
     ports:
       - 3000:3000
     restart: on-failure
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
 
 # Username: admin
 # Password: admin
+
+
+# volumes:
+#   grafana-storage:
